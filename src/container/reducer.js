@@ -38,6 +38,10 @@ export const userCredentialData = (prevState = userInitialData, action) => {
                ...prevState,
                loginData: action.data
             }
+        case types.CLEAR_USER_DATA:
+            return {
+                prevState
+            }
         case types.LOGIN_ERROR:
             return {
                 ...prevState,

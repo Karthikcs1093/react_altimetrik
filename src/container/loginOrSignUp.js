@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { formHandler } from './action';
+import { formHandler, clearUserData } from './action';
 import { registerUser, loginUser } from './thunk';
 import states from '../utility/states';
 import '../styles/index.css';
-import { createHashHistory } from 'history';
 
 class LoginOrSignUp extends React.PureComponent {
     constructor(props) {
@@ -84,6 +83,7 @@ class LoginOrSignUp extends React.PureComponent {
     }
 
     handleSubmit = (e)=> {
+        this.props.clearUserData();
         const { name, pwd, regName, phone, email, regPassword } = this.props.formValue;
         const regData = {
             regName,
@@ -106,7 +106,7 @@ class LoginOrSignUp extends React.PureComponent {
     componentDidUpdate(prevProps) {
         if(JSON.stringify(prevProps.userCredentials) !== JSON.stringify(this.props.userCredentials)) {
             const { loginData, registerData } =  this.props.userCredentials;
-            const {reponse} = loginData;
+            const {reponse} = loginData || {};
             const {error} = reponse || {};
             const regMsg = registerData && registerData.reponse && registerData.reponse.msg;
             console.log(regMsg, "regMsg")
@@ -207,6 +207,8 @@ const mapDispatchToProps = (dispatch) => {
         formHandler: bindActionCreators(formHandler, dispatch),
         registerUser: bindActionCreators(registerUser, dispatch),
         loginUser: bindActionCreators(loginUser, dispatch),
+        clearUserData: bindActionCreators(clearUserData, dispatch),
+
     }
 }
 

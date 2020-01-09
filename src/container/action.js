@@ -14,6 +14,12 @@ export const clearFormData = () => {
     }
 }
 
+export const clearUserData = () => {
+    return {
+        type: types.CLEAR_USER_DATA,
+    }
+}
+
 export const storeLoginSucessData = (data) => {
     return {
         type: types.LOGIN_SUCCESS,
